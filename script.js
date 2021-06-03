@@ -29,6 +29,16 @@ class QuotesCard {
           this.tokenState = res.pageToken;
           res.messages.forEach((quote) => this._renderQuotesHtml(quote));
           this.cardList = document.querySelectorAll(".posts__card");
+         if(this.isMobile()){
+            document.documentElement.scrollTo({
+                top: quotesWrapper.scrollHeight - 1000 ,
+            });
+         }
+         else{
+            document.documentElement.scrollTo({
+                top: quotesWrapper.scrollHeight - 700 ,
+              });
+         }
         }
       });
   }
@@ -36,7 +46,6 @@ class QuotesCard {
   _renderQuotesHtml(quote) {
     const currentDate = new Date();
     const publishedDate = new Date(quote.updated);
-    console.log(currentDate - publishedDate);
     let html = `<div class="posts__card" ontouchstart="quotes.handleTouchStart(event)" ontouchmove="quotes.handleTouchMove(event)" id="${
       quote.id
     }">
@@ -78,6 +87,7 @@ class QuotesCard {
     </div>
   </div>`;
     quotesWrapper.insertAdjacentHTML("afterbegin", html);
+    
   }
 
   getTouches(evt) {
@@ -91,7 +101,6 @@ class QuotesCard {
   }
 
   handleTouchMove(evt) {
-    console.log(evt);
     if (!this.xDown || !this.yDown) {
       return;
     }
@@ -128,26 +137,19 @@ class QuotesCard {
     this.yDown = null;
   }
 
-  infiniteScroll(e) {
+  infiniteScroll(event) {
     let scrollHeight = document.documentElement.scrollHeight;
     let scrollPos = window.innerHeight + window.scrollY;
-
+    console.log(scrollHeight,'Scroll height',scrollPos,'Scroll Pos',(scrollHeight > scrollPos) / scrollHeight == 0,"validation ");
     if (this.isFetchingState) return;
-
+    
+    // event.preventDefault();
     if (this.isMobile()) {
-      if ((scrollHeight - 500 >= scrollPos) / scrollHeight == 0) {
-        document.documentElement.scrollTo({
-          top: quotesWrapper.scrollHeight - 700,
-          behavior: "smooth",
-        });
+      if ((scrollHeight - 100 > scrollPos) / scrollHeight == 0) {
         this._fetchQuotes(this.tokenState);
       }
     } else {
-      if ((scrollHeight - 350 >= scrollPos) / scrollHeight == 0) {
-        document.documentElement.scrollTo({
-          top: quotesWrapper.scrollHeight - 600,
-          behavior: "smooth",
-        });
+      if ((scrollHeight > scrollPos) / scrollHeight == 0) {
         this._fetchQuotes(this.tokenState);
       }
     }
