@@ -4,6 +4,7 @@ const quotesWrapper = document.querySelector("#post-wrapper");
 
 class QuotesCard {
   tokenState = "";
+  isFetchingState = false;
   xDown = null;
   yDown = null;
   cardList;
@@ -11,16 +12,19 @@ class QuotesCard {
   constructor() {
     this._fetchQuotes();
     this.cardList = document.querySelectorAll(".posts__card");
-    window.addEventListener('scroll',this.infiniteScroll.bind(this));
-    
+
+    //Events
+    window.addEventListener("scroll", this.infiniteScroll.bind(this));
   }
 
-  _fetchQuotes(tokenState) {
-    const queryWithToken = tokenState == ''? '' :`?pageToken=${tokenState}`;
+  async _fetchQuotes(tokenState) {
+    this.isFetchingState = true;
+    const queryWithToken = tokenState == "" ? "" : `?pageToken=${tokenState}`;
 
-    fetch(`https://message-list.appspot.com/messages${queryWithToken}`)
+    await fetch(`https://message-list.appspot.com/messages${queryWithToken}`)
       .then((res) => res.json())
       .then((res) => {
+        this.isFetchingState = false;
         if (res.count > 0) {
           this.tokenState = res.pageToken;
           res.messages.forEach((quote) => this._renderQuotesHtml(quote));
@@ -30,7 +34,12 @@ class QuotesCard {
   }
 
   _renderQuotesHtml(quote) {
-    let html = `<div class="posts__card" ontouchstart="quotes.handleTouchStart(event)" ontouchmove="quotes.handleTouchMove(event)" id="${quote.id}">
+    const currentDate = new Date();
+    const publishedDate = new Date(quote.updated);
+    console.log(currentDate - publishedDate);
+    let html = `<div class="posts__card" ontouchstart="quotes.handleTouchStart(event)" ontouchmove="quotes.handleTouchMove(event)" id="${
+      quote.id
+    }">
     <div class="posts__card-wrapper">
       <div class="posts__card-delete flexbox-centered d-none">
           <span>
@@ -48,7 +57,10 @@ class QuotesCard {
           </div>
           <div class="posts__card-title">
             <h4>${quote.author.name}</h4>
-            <p class="posts__card-label">${quote.updated}</p>
+            <p class="posts__card-label">${this.diffYears(
+              currentDate,
+              publishedDate
+            )} years</p>
           </div>
         </div>
         <div class="posts__card-body">
@@ -69,10 +81,7 @@ class QuotesCard {
   }
 
   getTouches(evt) {
-    return (
-      evt.touches || // browser API
-      evt.originalEvent.touches
-    ); // jQuery
+    return evt.touches || evt.originalEvent.touches;
   }
 
   handleTouchStart(evt) {
@@ -119,22 +128,29 @@ class QuotesCard {
     this.yDown = null;
   }
 
-  infiniteScroll(e){
-      let scrollHeight = document.body.clientHeight;
-      let scrollPos = window.clientHeight + window.pageYOffset;
+  infiniteScroll(e) {
+    let scrollHeight = document.documentElement.scrollHeight;
+    let scrollPos = window.innerHeight + window.scrollY;
 
-      if (quotesWrapper.scrollTop + quotesWrapper.clientHeight >= quotesWrapper.scrollHeight) {
+    if (this.isFetchingState) return;
+
+    if (this.isMobile()) {
+      if ((scrollHeight - 500 >= scrollPos) / scrollHeight == 0) {
+        document.documentElement.scrollTo({
+          top: quotesWrapper.scrollHeight - 700,
+          behavior: "smooth",
+        });
         this._fetchQuotes(this.tokenState);
       }
-
-    //   if(((scrollHeight - 300) >= scrollPos) / scrollHeight == 0){
-
-    //     // window.scroll({
-    //     //     top :  scrollHeight,
-    //     //     behavior:'auto'
-    //     // });
-    //     this._fetchQuotes(this.tokenState);
-    // }
+    } else {
+      if ((scrollHeight - 350 >= scrollPos) / scrollHeight == 0) {
+        document.documentElement.scrollTo({
+          top: quotesWrapper.scrollHeight - 600,
+          behavior: "smooth",
+        });
+        this._fetchQuotes(this.tokenState);
+      }
+    }
   }
   removeActionButtons() {
     const deleteBtns = document.querySelectorAll(".posts__card-delete");
@@ -142,6 +158,23 @@ class QuotesCard {
 
     deleteBtns.forEach((ele) => ele.classList.add("d-none"));
     editBtns.forEach((ele) => ele.classList.add("d-none"));
+  }
+
+  //Helpers
+
+  diffYears(dt2, dt1) {
+    var diff = (dt2.getTime() - dt1.getTime()) / 1000;
+    diff /= 60 * 60 * 24;
+    return Math.abs(Math.round(diff / 365.25));
+  }
+
+  isMobile() {
+    const screenWidth = window.innerWidth;
+
+    if (screenWidth > 600) {
+      return false;
+    }
+    return true;
   }
 }
 
