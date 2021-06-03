@@ -18,7 +18,7 @@ class QuotesCard {
   _fetchQuotes(tokenState) {
     const queryWithToken = tokenState == ''? '' :`?pageToken=${tokenState}`;
 
-    fetch(`http://message-list.appspot.com/messages${queryWithToken}`)
+    fetch(`https://message-list.appspot.com/messages${queryWithToken}`)
       .then((res) => res.json())
       .then((res) => {
         if (res.count > 0) {
