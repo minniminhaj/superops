@@ -1,0 +1,132 @@
+@mixin tablet {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
+@mixin mobile {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+body {
+  font-size: 15px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+main {
+  padding: 80px 0;
+}
+.posts {
+  &__container {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    @include mobile() {
+      max-width: 100%;
+    }
+  }
+  &__wrapper {
+    // margin-right: -15px;
+    // margin-left: -15px;
+    @include mobile() {
+      justify-content: center;
+    }
+  }
+  &__card {
+    flex: 0 0 400px;
+    padding: 15px;
+    @include mobile() {
+      flex: 0 0 300px;
+      width: 100%;
+    }
+
+    &-delete,
+    &-edit {
+      flex-direction: column;
+
+      justify-content: center;
+      padding: 10px;
+      margin-right: 10px;
+      border-radius: 10px;
+      span {
+        font-size: 15px;
+        font-weight: 500;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        color: #fff;
+      }
+    }
+    &-delete {
+      background-color: red;
+    }
+    &-edit {
+      background-color: #1340ea;
+      margin-left: 10px;
+      margin-right: 0px;
+    }
+    &-wrapper {
+      padding: 20px;
+      box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      display: flex;
+      background-color: #fff;
+    }
+    &-header {
+      margin-bottom: 10px;
+    }
+    &-label {
+      font-size: 12px;
+      color: #666;
+    }
+    &-img {
+      margin-right: 15px;
+      img {
+        border-radius: 50%;
+      }
+    }
+    &-content {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+  p {
+    margin: 0;
+  }
+}
+header{
+    box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.1);
+    padding: 5px 15px;
+    position: fixed;
+    width: 100% ;
+    background-color: #fff;
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        top: 0px;
+        width: 100%;
+        max-width: 1250px;
+        margin: 0 auto;
+        
+      }
+}
+
+//Utility Starts
+.flexbox-centered {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.d-none {
+  display: none;
+}
+//Utility Ends

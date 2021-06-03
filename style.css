@@ -1,0 +1,166 @@
+body {
+  font-size: 15px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+main {
+  padding: 80px 0;
+}
+
+.posts__container {
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .posts__container {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .posts__wrapper {
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+}
+
+.posts__card {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 400px;
+          flex: 0 0 400px;
+  padding: 15px;
+}
+
+@media (max-width: 768px) {
+  .posts__card {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 300px;
+            flex: 0 0 300px;
+    width: 100%;
+  }
+}
+
+.posts__card-delete, .posts__card-edit {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+}
+
+.posts__card-delete span, .posts__card-edit span {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  -webkit-writing-mode: vertical-rl;
+      -ms-writing-mode: tb-rl;
+          writing-mode: vertical-rl;
+  text-orientation: upright;
+  color: #fff;
+}
+
+.posts__card-delete {
+  background-color: red;
+}
+
+.posts__card-edit {
+  background-color: #1340ea;
+  margin-left: 10px;
+  margin-right: 0px;
+}
+
+.posts__card-wrapper {
+  padding: 20px;
+  -webkit-box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.1);
+          box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #fff;
+}
+
+.posts__card-header {
+  margin-bottom: 10px;
+}
+
+.posts__card-label {
+  font-size: 12px;
+  color: #666;
+}
+
+.posts__card-img {
+  margin-right: 15px;
+}
+
+.posts__card-img img {
+  border-radius: 50%;
+}
+
+.posts__card-content {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.posts p {
+  margin: 0;
+}
+
+header {
+  -webkit-box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.1);
+          box-shadow: 1px 1px 9px rgba(0, 0, 0, 0.1);
+  padding: 5px 15px;
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+}
+
+header .navbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  top: 0px;
+  width: 100%;
+  max-width: 1250px;
+  margin: 0 auto;
+}
+
+.flexbox-centered {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.d-none {
+  display: none;
+}
+/*# sourceMappingURL=style.css.map */
