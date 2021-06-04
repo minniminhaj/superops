@@ -56,9 +56,14 @@ main {
       flex-direction: column;
 
       justify-content: center;
-      padding: 10px;
-      margin-right: 10px;
       border-radius: 10px;
+      width: 0px;
+      transition: .2s ease-in all;
+      &.active{
+        width: auto;
+        padding: 10px;
+        margin-right: 10px;
+      }
       span {
         font-size: 15px;
         font-weight: 500;
@@ -135,3 +140,21 @@ header{
   display: none;
 }
 //Utility Ends
+
+//Animation Starts
+.slide-out-left {
+	        animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}
+@keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+            transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+//Animation Ends

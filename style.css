@@ -70,9 +70,16 @@ main {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  border-radius: 10px;
+  width: 0px;
+  -webkit-transition: .2s ease-in all;
+  transition: .2s ease-in all;
+}
+
+.posts__card-delete.active, .posts__card-edit.active {
+  width: auto;
   padding: 10px;
   margin-right: 10px;
-  border-radius: 10px;
 }
 
 .posts__card-delete span, .posts__card-edit span {
@@ -174,5 +181,36 @@ header .navbar {
 
 .d-none {
   display: none;
+}
+
+.slide-out-left {
+  -webkit-animation: slide-out-left 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+          animation: slide-out-left 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+}
+
+@-webkit-keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-out-left {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: translateX(-1000px);
+    transform: translateX(-1000px);
+    opacity: 0;
+  }
 }
 /*# sourceMappingURL=style.css.map */

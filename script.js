@@ -29,16 +29,15 @@ class QuotesCard {
           this.tokenState = res.pageToken;
           res.messages.forEach((quote) => this._renderQuotesHtml(quote));
           this.cardList = document.querySelectorAll(".posts__card");
-         if(this.isMobile()){
+          if (this.isMobile()) {
             document.documentElement.scrollTo({
-                top: quotesWrapper.scrollHeight - 1000 ,
+              top: quotesWrapper.scrollHeight - 1000,
             });
-         }
-         else{
+          } else {
             document.documentElement.scrollTo({
-                top: quotesWrapper.scrollHeight - 700 ,
-              });
-         }
+              top: quotesWrapper.scrollHeight - 700,
+            });
+          }
         }
       });
   }
@@ -50,7 +49,7 @@ class QuotesCard {
       quote.id
     }">
     <div class="posts__card-wrapper">
-      <div class="posts__card-delete flexbox-centered d-none">
+      <div class="posts__card-delete flexbox-centered ">
           <span>
               Delete
           </span>
@@ -78,7 +77,7 @@ class QuotesCard {
           </p>
         </div>
       </div>
-      <div class="posts__card-edit flexbox-centered d-none">
+      <div class="posts__card-edit flexbox-centered ">
           <span>
               Edit
           </span>
@@ -87,7 +86,6 @@ class QuotesCard {
     </div>
   </div>`;
     quotesWrapper.insertAdjacentHTML("afterbegin", html);
-    
   }
 
   getTouches(evt) {
@@ -113,17 +111,9 @@ class QuotesCard {
 
     if (Math.abs(xDiff) > Math.abs(yDiff)) {
       if (xDiff > 0) {
-        this.removeActionButtons();
-        evt.target
-          .closest(".posts__card")
-          .querySelector(".posts__card-edit")
-          .classList.remove("d-none");
+        this.handleEditQuote(evt);
       } else {
-        this.removeActionButtons();
-        evt.target
-          .closest(".posts__card")
-          .querySelector(".posts__card-delete")
-          .classList.remove("d-none");
+        this.handleDeleteQuote(evt);
       }
     } else {
       if (yDiff > 0) {
@@ -132,17 +122,50 @@ class QuotesCard {
         console.log("Swiped Down side");
       }
     }
-    /* reset values */
+    
     this.xDown = null;
     this.yDown = null;
   }
 
+  handleDeleteQuote(evt) {
+    this.removeActionButtons();
+    evt.target
+      .closest(".posts__card")
+      .querySelector(".posts__card-delete")
+      .classList.add("active");
+
+      setTimeout(()=>{
+        evt.target
+        .closest(".posts__card").classList.add('slide-out-left')
+      },800);
+
+      setTimeout(()=>{
+        evt.target
+        .closest(".posts__card").remove();
+      },1200);
+     
+  }
+
+  handleEditQuote(evt) {
+    this.removeActionButtons();
+    evt.target
+      .closest(".posts__card")
+      .querySelector(".posts__card-edit")
+      .classList.add("active");
+  }
   infiniteScroll(event) {
     let scrollHeight = document.documentElement.scrollHeight;
     let scrollPos = window.innerHeight + window.scrollY;
-    console.log(scrollHeight,'Scroll height',scrollPos,'Scroll Pos',(scrollHeight > scrollPos) / scrollHeight == 0,"validation ");
+    console.log(
+      scrollHeight,
+      "Scroll height",
+      scrollPos,
+      "Scroll Pos",
+      (scrollHeight > scrollPos) / scrollHeight == 0,
+      "validation "
+    );
     if (this.isFetchingState) return;
-    
+
     // event.preventDefault();
     if (this.isMobile()) {
       if ((scrollHeight - 100 > scrollPos) / scrollHeight == 0) {
@@ -158,8 +181,8 @@ class QuotesCard {
     const deleteBtns = document.querySelectorAll(".posts__card-delete");
     const editBtns = document.querySelectorAll(".posts__card-edit");
 
-    deleteBtns.forEach((ele) => ele.classList.add("d-none"));
-    editBtns.forEach((ele) => ele.classList.add("d-none"));
+    deleteBtns.forEach((ele) => ele.classList.remove("active"));
+    editBtns.forEach((ele) => ele.classList.remove("active"));
   }
 
   //Helpers
