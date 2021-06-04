@@ -117,12 +117,12 @@ class QuotesCard {
       }
     } else {
       if (yDiff > 0) {
-        console.log("Swiped Up side");
+        // console.log("Swiped Up side");
       } else {
-        console.log("Swiped Down side");
+        // console.log("Swiped Down side");
       }
     }
-    
+
     this.xDown = null;
     this.yDown = null;
   }
@@ -156,14 +156,6 @@ class QuotesCard {
   infiniteScroll(event) {
     let scrollHeight = document.documentElement.scrollHeight;
     let scrollPos = window.innerHeight + window.scrollY;
-    console.log(
-      scrollHeight,
-      "Scroll height",
-      scrollPos,
-      "Scroll Pos",
-      (scrollHeight > scrollPos) / scrollHeight == 0,
-      "validation "
-    );
     if (this.isFetchingState) return;
 
     // event.preventDefault();
